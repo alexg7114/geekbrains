@@ -1,0 +1,19 @@
+Number {{ number }} is
+{% if divResult == 0 %}
+    <span style="color: green">even</span>
+{% else %}
+    <span style="color: red">odd</span>
+{% endif %}
+
+<hr>
+
+It is
+{% if month == 12 or month <= 2 %}
+    winter
+{% elseif month >= 3 and month <= 5 %}
+    spring
+{% elseif month >= 6 and month <= 8 %}
+    summer
+{% elseif month >= 9 and month <= 11 %}
+    autumn
+{% endif %}

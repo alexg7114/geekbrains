@@ -1,0 +1,33 @@
+<style>
+    div { border: solid 1px; padding: 10px; }
+</style>
+<div>
+    Now date: {{ "now"|date("Y-m-d H:i:s") }}<br/>
+    Now date: {{ 0|date("Y-m-d H:i:s") }}
+</div>
+<div>
+    {{ "Hello world"|upper }}<br>
+    {{ "Hello world"|lower }}<br>
+    {{ "hello world"|capitalize }}<br>
+    {{ "hello world"|title }}<br>
+</div>
+<div>
+    As is: {{ html }}<br/>
+    raw: {{ html|raw }}<br/>
+    escape: {{ html|escape }}<br/>
+    strip: {{ html|striptags }}<br/>
+    -- Autoescape:<br/>
+    {% autoescape %}
+        As is: {{ html }}<br/>
+        raw: {{ html|raw }}<br/>
+        escape: {{ html|escape }}<br/>
+        strip: {{ html|striptags }}<br/>
+    {% endautoescape %}
+    -- Autoescape off:<br/>
+    {% autoescape false %}
+        As is: {{ html }}<br/>
+        raw: {{ html|raw }}<br/>
+        escape: {{ html|escape }}<br/>
+        strip: {{ html|striptags }}<br/>
+    {% endautoescape %}
+</div>
