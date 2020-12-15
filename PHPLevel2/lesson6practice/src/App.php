@@ -31,15 +31,18 @@ class App
 
         $this->db = new DB($this->config['db']);
 
+
         // '/users/list/123/?foo=bar' => ['/users/list/123/', 'foo=bar']
         [$uri] = explode('?', $_SERVER['REQUEST_URI']);
-        //'/users/list/123/' => 'users/list/123' => ['users', 'list', '123']
-        [$controllerName, $actionName, $param] = explode('/', trim($uri, '/'));
 
-        if (empty($controllerName)) {
+        //'/users/list/123/' => 'users/list/123' => ['users', 'list', '123']
+        //[$controllerName, $actionName, $param] = explode('/', trim($uri, '/'));
+
+        $router = new Router($this->config['routing']);
+        if (null !== $route = $router->route($uri)) {
+            [$controllerName, $actionName, $params] = $route;
+        } else {
             $controllerName = 'index';
-        }
-        if (empty($actionName)) {
             $actionName = 'index';
         }
 
@@ -54,7 +57,7 @@ class App
             // Проверяем - существует ли в контроллере такой action-метод => вызываем его
             if (method_exists($controller, $actionMethod)) {
                 if ($controller->beforeAction()) {
-                    $controller->$actionMethod($param);
+                    $controller->$actionMethod($params);
                 }
                 $controller->afterAction();
                 return;
