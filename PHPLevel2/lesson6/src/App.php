@@ -27,6 +27,8 @@ class App
 
     public function run()
     {
+        session_start();
+
         $this->db = new DB($this->config['db']);
 
         // '/users/list/123/?foo=bar' => ['/users/list/123/', 'foo=bar']
@@ -51,7 +53,10 @@ class App
             $controller = new $controllerClass;
             // Проверяем - существует ли в контроллере такой action-метод => вызываем его
             if (method_exists($controller, $actionMethod)) {
-                $controller->$actionMethod($param);
+                if ($controller->beforeAction()) {
+                    $controller->$actionMethod($param);
+                }
+                $controller->afterAction();
                 return;
             }
         }

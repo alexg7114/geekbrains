@@ -6,5 +6,11 @@
         "psr-4": {
             "MyApp\\": "src/"
         }
+    },
+    "scripts": {
+        "dev": "php -S localhost:8888 -t public"
+    },
+    "config": {
+        "process-timeout":0
     }
 }
