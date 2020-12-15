@@ -8,6 +8,7 @@ class History extends BaseModel
 
     public static function get($userId, $limit = 5)
     {
+        return;
         $stmt = self::db()
             ->getLink()
             ->query(
@@ -19,6 +20,7 @@ class History extends BaseModel
 
     public static function store($userId, $url)
     {
+        return;
         $stmt = self::db()->getLink()->prepare('INSERT INTO ' . self::TABLE . ' SET user_id=:id, url=:url');
         $stmt->bindParam('id', $userId);
         $stmt->bindParam('url', $url);

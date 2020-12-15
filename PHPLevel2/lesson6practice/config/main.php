@@ -2,7 +2,7 @@
 
 return [
     'db' => [
-        'dsn' => 'mysql:dbname=dz;host=127.0.0.1',
+        'dsn' => 'mysql:dbname=app;host=127.0.0.1',
         'user' => 'root',
         'pwd' => '1531',
     ],
@@ -10,7 +10,8 @@ return [
     'routing' => [
         'login' => 'auth/index',
         'logout' => 'auth/logout',
-        'basket' => 'user/basket',
+        'basket' => 'auth/basket',
+        'order' => 'auth/order',
         'catalog\/([0-9]+)\/([0-9]+)' => 'catalog/good',
         'catalog\/([0-9]+)' => 'catalog/category',
         'catalog' => 'catalog/index',
