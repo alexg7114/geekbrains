@@ -1,0 +1,19 @@
+{% extends 'layout.twig' %}
+
+{% block title %}MyApp / Basket{% endblock %}
+{% block content %}
+    В корзине <br/><br/>
+    {% for item in goods %}
+        <li>
+            <a href="/catalog/{{ item.category_id }}/{{ item.id }}">{{ item.title }}</a> |
+            ${{ item.price }} |
+            {{ item.count }} шт. |
+            => ${{ item.sum }}
+        </li>
+    {% endfor %}
+    <b>${{ sum }}</b>
+    <br/><br/>
+    {% if goods|length %}
+        <a href="/order">оформить заказ</a>
+    {% endif %}
+{% endblock %}

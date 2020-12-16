@@ -6,28 +6,49 @@ use MyApp\Models\Users;
 
 class Auth
 {
-    public static function login($login, $pass)
+    public static function getBasket()
     {
-        if (Users::check($login, $pass)) {
-            self::rememberUser($login);
-            return true;
-        }
+        self::initBasket();
 
-        return false;
+        return $_SESSION['basket'];
     }
 
-    private static function rememberUser($login)
+    public static function addToBasket($id)
     {
-        $_SESSION['user'] = Users::getUser($login);
+        self::initBasket();
+
+        $_SESSION['basket']['count']++;
+        $_SESSION['basket']['goods'][$id]++;
+    }
+
+    public static function clearBasket()
+    {
+        self::initBasket(true);
+    }
+
+    private static function initBasket($force = false)
+    {
+        if ($force || empty($_SESSION['basket'])) {
+            $_SESSION['basket'] = [
+                'count' => 0,
+                'goods' => [],
+            ];
+        }
     }
 
     public static function getUser()
     {
-        return !empty($_SESSION['user']) ? $_SESSION['user'] : null;
+        return $_SESSION['user'];
+    }
+
+    public static function login($login)
+    {
+        $_SESSION['user'] = Users::get($login);
     }
 
     public static function logout()
     {
-        unset($_SESSION['user']);
+        $_SESSION['user'] = null;
+        self::clearBasket();
     }
 }

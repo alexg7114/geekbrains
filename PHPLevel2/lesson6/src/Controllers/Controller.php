@@ -4,7 +4,6 @@ namespace MyApp\Controllers;
 
 use MyApp\App;
 use MyApp\Auth;
-use MyApp\Models\History;
 
 abstract class Controller
 {
@@ -18,10 +17,6 @@ abstract class Controller
 
     public function beforeAction()
     {
-        if ($user = Auth::getUser()) {
-            History::store($user['id'], $_SERVER['REQUEST_URI']);
-        }
-
         return true;
     }
 
@@ -31,6 +26,9 @@ abstract class Controller
 
     protected function render($name, $data = [])
     {
+        $data['_user'] = Auth::getUser();
+        $data['_basket'] = Auth::getBasket();
+
         echo $this->twig->render($name, $data);
     }
 

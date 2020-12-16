@@ -1,0 +1,10 @@
+{% if _user %}
+    Превет, {{ _user.login }}
+    <a href="/users/logout">выйти</a>
+{% else %}
+    <a href="/users/login">войти</a>
+{% endif %}
+<div style="float: right">
+    <a href="/basket">Корзина</a> ({{ _basket.count }})
+</div>
+<hr/>

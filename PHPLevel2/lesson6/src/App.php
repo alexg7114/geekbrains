@@ -3,6 +3,7 @@
 namespace MyApp;
 
 use MyApp\Controllers\IndexController;
+use MyApp\Models\History;
 
 class App
 {
@@ -31,16 +32,23 @@ class App
 
         $this->db = new DB($this->config['db']);
 
-        // '/users/list/123/?foo=bar' => ['/users/list/123/', 'foo=bar']
-        [$uri] = explode('?', $_SERVER['REQUEST_URI']);
-        //'/users/list/123/' => 'users/list/123' => ['users', 'list', '123']
-        [$controllerName, $actionName, $param] = explode('/', trim($uri, '/'));
-
-        if (empty($controllerName)) {
-            $controllerName = 'index';
+        if ($user = Auth::getUser()) {
+            History::add($user['id'], Router::getURI());
         }
-        if (empty($actionName)) {
-            $actionName = 'index';
+
+        // '/users/list/123/?foo=bar' => ['/users/list/123/', 'foo=bar']
+        //[$uri] = explode('?', $_SERVER['REQUEST_URI']);
+        //'/users/list/123/' => 'users/list/123' => ['users', 'list', '123']
+        //[$controllerName, $actionName, $param] = explode('/', trim($uri, '/'));
+        $uri = Router::getURI();
+
+        $router = new Router(App::instance()->getConfig()['routing']);
+        if (false === $rout = $router->parse($uri)) {
+            $controllerName = 'index';
+            $actionName = 'error';
+            $params = [];
+        } else {
+            [$controllerName, $actionName, $params] = $rout;
         }
 
         // 'example' => MyApp\Controllers\ExampleController
@@ -54,7 +62,7 @@ class App
             // Проверяем - существует ли в контроллере такой action-метод => вызываем его
             if (method_exists($controller, $actionMethod)) {
                 if ($controller->beforeAction()) {
-                    $controller->$actionMethod($param);
+                    $controller->$actionMethod($params);
                 }
                 $controller->afterAction();
                 return;

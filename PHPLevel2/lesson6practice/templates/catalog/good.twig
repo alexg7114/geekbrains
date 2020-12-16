@@ -1,8 +1,0 @@
-{% extends 'layout.twig' %}
-
-{% block title %}MyApp / Catalog / {{ cat.title }}{% endblock %}
-{% block content %}
-    <h2><a href="/catalog">Каталог</a> / <a href="/catalog/{{ cat.id }}">{{ cat.title }}</a> / {{ good.title}} </h2>
-    Price: {{ good.price }}
-    <a href="?add2Basket={{ good.id }}">Добавить в корзину</a>
-{% endblock %}
