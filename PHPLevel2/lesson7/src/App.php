@@ -26,12 +26,17 @@ class App
         return $this->db;
     }
 
-    public function run()
+    public function init()
     {
-        session_start();
+        if (!headers_sent()) {
+            session_start();
+        }
 
         $this->db = new DB($this->config['db']);
+    }
 
+    public function run()
+    {
         if ($user = Auth::getUser()) {
             History::add($user['id'], Router::getURI());
         }

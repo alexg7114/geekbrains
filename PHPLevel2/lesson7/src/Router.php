@@ -43,7 +43,7 @@ class Router
         return $uri;
     }
 
-    private static function filter($url)
+    public static function filter($url)
     {
         // /sdfg///dfgdf/
         $parts = explode('/', $url);

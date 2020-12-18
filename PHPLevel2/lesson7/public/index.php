@@ -8,4 +8,5 @@ require '../vendor/autoload.php';
 $config = require '../config/main.php';
 
 \MyApp\App::instance()->setConfig($config);
+\MyApp\App::instance()->init();
 \MyApp\App::instance()->run();

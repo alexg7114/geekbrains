@@ -27,9 +27,9 @@ class Orders extends BaseModel
         );
     }
 
-    public static function getAll()
+    protected static function getOrdersRawData()
     {
-        $rows = self::db()->getLink()->query(
+        return self::db()->getLink()->query(
             'SELECT orders.id, users.login, orders.`date`, orders.`status`,
             orders_goods.good_id, goods.category_id, orders_goods.price, orders_goods.`count`,goods.title
             FROM orders
@@ -38,6 +38,11 @@ class Orders extends BaseModel
             JOIN users ON orders.user_id=users.id
             ORDER BY orders.`date` DESC'
         )->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public static function getAll()
+    {
+        $rows = static::getOrdersRawData();
 
         $orders = [];
         foreach ($rows as $row) {
@@ -54,6 +59,9 @@ class Orders extends BaseModel
                 'title' => $row['title'],
                 'sum' => $goodSum,
             ];
+            if (!isset($orders[$id]['sum'])) {
+                $orders[$id]['sum'] = 0;
+            }
             $orders[$id]['sum'] += $goodSum;
         }
 
