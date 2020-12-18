@@ -1,0 +1,9 @@
+{% extends 'layout.twig' %}
+
+{% block title %}MyApp / Acoount{% endblock %}
+{% block content %}
+    Последние страницы:
+    {% for item in history %}
+        <li>{{ item.url }}</li>
+    {% endfor %}
+{% endblock %}
