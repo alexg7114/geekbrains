@@ -4,7 +4,24 @@ namespace MyApp\Models;
 
 class Users extends BaseModel
 {
+    const ROLE_ADMIN = 1;
+    const ROLE_CONTENT = 2;
+
     const TABLE = 'users';
+    const TABLE_ROLES = 'users_roles';
+
+    public static function getRoles($userId): array
+    {
+        $rows = self::db()->getLink()
+            ->query('SELECT * FROM ' . self::TABLE_ROLES . ' WHERE user_id='.(int)$userId)
+            ->fetchAll(\PDO::FETCH_ASSOC);
+
+        $roles = [];
+        foreach ($rows as $row) {
+            $roles[] = $row['role'];
+        }
+        return $roles;
+    }
 
     public static function check($login, $password)
     {

@@ -4,7 +4,7 @@ return [
     'db' => [
         'dsn' => 'mysql:dbname=app;host=127.0.0.1',
         'user' => 'root',
-        'pwd' => 'root',
+        'pwd' => '1531',
     ],
     'templates' => __DIR__ . '/../templates',
     'routing' => [
