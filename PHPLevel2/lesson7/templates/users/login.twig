@@ -1,0 +1,14 @@
+{% extends 'layout.twig' %}
+
+{% block title %}MyApp / Login{% endblock %}
+{% block content %}
+    Вход<br>
+    {% if error %}
+        <div style="color: red">Неправильный логин или пароль</div>
+    {% endif %}
+    <form method="post" action="/users/login">
+        <input type="text" name="login">
+        <input type="text" name="pass">
+        <input type="submit" value="вход">
+    </form>
+{% endblock %}
