@@ -2,11 +2,9 @@
 
 abstract class BaseTest extends \PHPUnit\Framework\TestCase
 {
-    protected static $app;
-
     public static function setUpBeforeClass(): void
     {
-        $config = require __DIR__.'/../config/main.php';
+        $config = require __DIR__ . '/../config/main.php';
 
         \MyApp\App::instance()->setConfig($config);
         \MyApp\App::instance()->init();

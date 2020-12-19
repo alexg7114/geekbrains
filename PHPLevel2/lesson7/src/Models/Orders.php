@@ -18,51 +18,57 @@ class Orders extends BaseModel
     public const TABLE_ORDERS = 'orders';
     public const TABLE_ORDERS_GOODS = 'orders_goods';
 
-    public static function setStatus($oderId, $status)
+    public static function setStatus($id, $status)
     {
         self::db()->getLink()->exec(
             'UPDATE ' . self::TABLE_ORDERS
             . ' SET status=' . (int)$status
-            . ' WHERE id=' . (int)$oderId
+            . ' WHERE id=' . (int)$id
         );
     }
 
-    protected static function getOrdersRawData()
+    public static function getAllRawData()
     {
         return self::db()->getLink()->query(
-            'SELECT orders.id, users.login, orders.`date`, orders.`status`,
-            orders_goods.good_id, goods.category_id, orders_goods.price, orders_goods.`count`,goods.title
+            'SELECT orders.id,orders.`date`,orders.status,
+            orders_goods.price,orders_goods.`count`,orders_goods.good_id,
+            users.login, goods.title,goods.category_id
             FROM orders
             JOIN orders_goods ON orders.id=orders_goods.order_id
-            JOIN goods ON orders_goods.good_id=goods.id
             JOIN users ON orders.user_id=users.id
+            JOIN goods ON orders_goods.good_id=goods.id
             ORDER BY orders.`date` DESC'
         )->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public static function getAll()
     {
-        $rows = static::getOrdersRawData();
+        $rows = static::getAllRawData();
 
         $orders = [];
         foreach ($rows as $row) {
             $id = $row['id'];
-            $orders[$id]['login'] = $row['login'];
-            $orders[$id]['date'] = $row['date'];
-            $orders[$id]['status'] = $row['status'];
-            $goodSum = $row['count'] * $row['price'];
+            if (!isset($orders[$id])) {
+                $orders[$id] = [
+                    'date' => $row['date'],
+                    'status' => $row['status'],
+                    'login' => $row['login'],
+                    'sum' => 0,
+                    'goods' => [],
+                ];
+            }
+
+            $sum = $row['price'] * $row['count'];
             $orders[$id]['goods'][] = [
-                'id' => $row['good_id'],
-                'category_id' => $row['category_id'],
                 'price' => $row['price'],
                 'count' => $row['count'],
+                'id' => $row['good_id'],
                 'title' => $row['title'],
-                'sum' => $goodSum,
+                'category_id' => $row['category_id'],
+                'sum' => $sum,
             ];
-            if (!isset($orders[$id]['sum'])) {
-                $orders[$id]['sum'] = 0;
-            }
-            $orders[$id]['sum'] += $goodSum;
+
+            $orders[$id]['sum'] += $sum;
         }
 
         return $orders;

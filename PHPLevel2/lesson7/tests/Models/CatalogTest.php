@@ -3,28 +3,20 @@ namespace Models;
 
 use MyApp\Models\Catalog;
 
-final class CatalogTest extends \BaseTest
+class CatalogTest extends \BaseTest
 {
-    public function testGetGoodsByCategory()
-    {
-        $emptyGoods = Catalog::getGoodsByCategory('sdfsdf');
-        $this->assertIsArray($emptyGoods);
-        $this->assertEmpty($emptyGoods);
-    }
-
     public function testGetGoodsByIds()
     {
-        $this->assertEmpty(Catalog::getGoodsByIds([]));
+        $actual = Catalog::getGoodsByIds([]);
+        $this->assertIsArray($actual);
+        $this->assertEmpty($actual);
     }
 
     public function testGetCategoryById()
     {
         $categories = Catalog::getCategories();
+        $expected = array_shift($categories);
 
-        foreach ($categories as $category) {
-            $cat = Catalog::getCategoryById($category['id']);
-
-            $this->assertEquals($category, $cat);
-        }
+        $this->assertEquals($expected, Catalog::getCategoryById($expected['id']));
     }
 }

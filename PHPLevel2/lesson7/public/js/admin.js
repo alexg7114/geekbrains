@@ -3,13 +3,13 @@ $(document).ready(function () {
         var id = $(this).data('id');
         var status = $(this).val();
 
-        $(this).attr('disabled', true);
-        var pthis = this;
+        var select = $(this);
+        select.attr('disabled', true);
         $.ajax({
-            url: '/admin/status?id='+id+'&status='+status,
+            url: '/admin/status?id=' + id + '&status=' + status,
             success: function () {
-                $(pthis).attr('disabled', false);
-            },
+                select.attr('disabled', false);
+            }
         });
     });
 });

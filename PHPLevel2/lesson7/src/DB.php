@@ -33,11 +33,11 @@ class DB
         }
     }
 
-    public function getTableData($tableName, $order = '')
+    public function getTableData($tableName)
     {
         try {
             return $this->link
-                ->query("SELECT * FROM {$tableName} " . $order)
+                ->query("SELECT * FROM {$tableName}")
                 ->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\Throwable $e) {
             return null;

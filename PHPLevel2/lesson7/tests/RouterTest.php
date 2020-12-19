@@ -30,13 +30,12 @@ final class RouterTest extends \PHPUnit\Framework\TestCase
     public function parseProvider()
     {
         return [
-            ['/login', ['users', 'login', []]],
-            ['/logout', ['users', 'logout', []]],
-            ['/catalog/123/234', ['catalog', 'good', ['123','234']]],
-            ['/pages/foo/bar', ['pages', 'index', ['foo/bar']]],
-            ['/foo/bar/', ['foo', 'bar', []]],
-            ['/', ['index','index', []]],
-            ['/qwe/wer/ert/rty', ['qwe', 'wer', []]]
+            ['/asd//qwe//', ['asd', 'qwe', []]],
+            ['', ['index', 'index', []]],
+            ['logout', ['users', 'logout', []]],
+            ['catalog/123', ['catalog', 'category', ['123']]],
+            ['catalog/123/234', ['catalog', 'good', ['123', '234']]],
+            ['pages/this_is_good_page/and_subpage', ['pages', 'index', ['this_is_good_page/and_subpage']]],
         ];
     }
 
@@ -56,8 +55,8 @@ final class RouterTest extends \PHPUnit\Framework\TestCase
     {
         return [
             ['/foo/bar?asd=qwe', '/foo/bar'],
-            ['?asd=qwe', ''],
             ['/foo/bar', '/foo/bar'],
+            ['?asd=qwe', ''],
         ];
     }
 
@@ -75,9 +74,9 @@ final class RouterTest extends \PHPUnit\Framework\TestCase
     public function filterProvider()
     {
         return [
+            ['/sdfg///dfgdf/', 'sdfg/dfgdf'],
             ['/', ''],
-            ['///sdf///qwe//', 'sdf/qwe'],
-            ['////qwe//', 'qwe'],
+            ['//dfgdf/', 'dfgdf'],
             ['', ''],
         ];
     }

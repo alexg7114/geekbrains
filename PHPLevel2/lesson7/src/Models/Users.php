@@ -10,10 +10,10 @@ class Users extends BaseModel
     const TABLE = 'users';
     const TABLE_ROLES = 'users_roles';
 
-    public static function getRoles($userId): array
+    public static function getRoles($userId)
     {
         $rows = self::db()->getLink()
-            ->query('SELECT * FROM ' . self::TABLE_ROLES . ' WHERE user_id='.(int)$userId)
+            ->query('SELECT * FROM ' . self::TABLE_ROLES . ' WHERE user_id=' . (int)$userId)
             ->fetchAll(\PDO::FETCH_ASSOC);
 
         $roles = [];

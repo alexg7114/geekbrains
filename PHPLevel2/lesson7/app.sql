@@ -65,12 +65,14 @@ CREATE TABLE IF NOT EXISTS `users` (
     `login` varchar(50) DEFAULT NULL,
     `pass` varchar(60) DEFAULT NULL,
     PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+    ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы app.users: ~2 rows (приблизительно)
+-- Дамп данных таблицы app.users: ~4 rows (приблизительно)
 INSERT INTO `users` (`id`, `login`, `pass`) VALUES
 (1, 'root', '$2y$10$c7GOr5zRtGT5unEDek7OI.LTlP1Aa2DX7wPQe9xZZEPxWaJYlOfDC'),
-(2, 'admin', '$2y$10$db5ZWgJmoD53rLR/a9Bbh.GENw3DiHgk1B9FB6VKTd3UqFticQdvq');
+(2, 'admin', '$2y$10$db5ZWgJmoD53rLR/a9Bbh.GENw3DiHgk1B9FB6VKTd3UqFticQdvq'),
+(5, 'content', '$2y$10$rgnMCsa5ttKisZzzrPinR.KMoFLCq2eVcP9iCOFeIWjzcgkwMnC0G'),
+(6, 'user', '$2y$10$fVGMMnQIylGbcNLx.rf7w.rSs061jBV1t7YlefmF.BKdzkmHWt10O');
 
 -- Дамп структуры для таблица app.users_roles
 DROP TABLE IF EXISTS `users_roles`;
@@ -79,4 +81,11 @@ CREATE TABLE IF NOT EXISTS `users_roles` (
     `user_id` int(10) unsigned NOT NULL DEFAULT 0,
     `role` int(10) unsigned NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы app.users_roles: ~4 rows (приблизительно)
+INSERT INTO `users_roles` (`id`, `user_id`, `role`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 5, 2),
+(4, 2, 2);

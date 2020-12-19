@@ -1,10 +1,10 @@
 <?php
-
 namespace Models;
 
 use MyApp\Models\Orders;
+use PHPUnit\Framework\TestCase;
 
-final class OrdersTest extends \BaseTest
+class OrdersTest extends TestCase
 {
     public function testGetAll()
     {
@@ -13,32 +13,31 @@ final class OrdersTest extends \BaseTest
         $orders::$rawData = [
             [
                 'id' => 1,
-                'login' => 'admin',
-                'date' => '123123',
-                'status' => '1',
-                'price' => 1000,
-                'good_id' => 2,
-                'category_id' => 3,
+                'date' => 'qweqwe',
+                'status' => 1,
+                'price' => 100,
                 'count' => 2,
-                'title' => 'Title',
+                'good_id' => 3,
+                'login' => 'admin',
+                'title' => 'foo',
+                'category_id' => 7,
             ],
             [
                 'id' => 1,
+                'date' => 'qweqwe',
+                'status' => 1,
+                'price' => 200,
+                'count' => 3,
+                'good_id' => 4,
                 'login' => 'admin',
-                'date' => '123123',
-                'status' => '1',
-                'price' => 500,
-                'good_id' => 3,
-                'category_id' => 1,
-                'count' => 1,
-                'title' => 'Title2',
+                'title' => 'bar',
+                'category_id' => 8,
             ],
         ];
+        $actual = $orders::getAll();
 
-        $all = $orders::getAll();
-
-        $this->assertEquals(2500, $all[1]['sum']);
-        $this->assertCount(2, $all[1]['goods']);
+        $this->assertEquals(800, $actual[1]['sum']);
+        $this->assertCount(2, $actual[1]['goods']);
     }
 
     protected function getOrdersMock()
@@ -46,7 +45,7 @@ final class OrdersTest extends \BaseTest
         return new class extends Orders {
             public static $rawData;
 
-            protected static function getOrdersRawData()
+            public static function getAllRawData()
             {
                 return self::$rawData;
             }

@@ -10,7 +10,7 @@ class AdminController extends Controller
 {
     public function beforeAction()
     {
-        if (!Auth::haveRole(Users::ROLE_ADMIN) && !Auth::haveRole(Users::ROLE_CONTENT)) {
+        if (!Auth::hasRole(Users::ROLE_ADMIN) && !Auth::hasRole(Users::ROLE_CONTENT)) {
             $this->redirect('/login');
         }
 
@@ -22,14 +22,14 @@ class AdminController extends Controller
         $this->render('admin/index.twig', [
             'orders' => Orders::getAll(),
             'statuses' => Orders::$statuses,
-            'isAdmin' => Auth::haveRole(Users::ROLE_ADMIN),
+            'isAdmin' => Auth::hasRole(Users::ROLE_ADMIN),
         ]);
     }
 
     public function actionStatus()
     {
-        if (!Auth::haveRole(Users::ROLE_ADMIN)) {
-            return;
+        if (!Auth::hasRole(Users::ROLE_ADMIN)) {
+            $this->redirect('/login');
         }
 
         $id = $_GET['id'] ?? null;

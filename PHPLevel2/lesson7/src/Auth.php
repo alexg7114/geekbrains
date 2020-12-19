@@ -36,15 +36,6 @@ class Auth
         }
     }
 
-    public static function haveRole(int $role)
-    {
-        if (empty($_SESSION['user']['roles'])) {
-            return false;
-        }
-
-        return in_array($role, $_SESSION['user']['roles']);
-    }
-
     public static function getUser()
     {
         return $_SESSION['user'];
@@ -52,8 +43,18 @@ class Auth
 
     public static function login($login)
     {
-        $_SESSION['user'] = Users::get($login);
-        $_SESSION['user']['roles'] = Users::getRoles($_SESSION['user']['id']);
+        $user = Users::get($login);
+        $_SESSION['user'] = $user;
+        $_SESSION['user']['roles'] = Users::getRoles($user['id']);
+    }
+
+    public static function hasRole(int $role): bool
+    {
+        if (empty($_SESSION['user']['roles'])) {
+            return false;
+        }
+
+        return in_array($role, $_SESSION['user']['roles']);
     }
 
     public static function logout()
