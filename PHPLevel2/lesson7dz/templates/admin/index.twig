@@ -1,0 +1,36 @@
+{% extends 'layout.twig' %}
+
+{% block title %}MyApp / Admin{% endblock %}
+{% block content %}
+    Заказы:
+    <table border="1" cellpadding="5" cellspacing="0">
+        {% for id,data in orders %}
+            <tr>
+                <td>{{ id }}</td>
+                <td>{{ data.date }}</td>
+                <td>{{ data.login }}</td>
+                <td><b>${{ data.sum }}</b></td>
+                <td>
+                    <select {% if not isAdmin %}disabled{% endif %} data-id="{{ id }}" class="js-status">
+                        {% for key,status in statuses %}
+                            <option {% if key == data.status %}selected{% endif %}
+                                    value="{{ key }}">{{ status }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    {% for good in data.goods %}
+                        <li>
+                            <a href="/catalog/{{ good.category_id }}/{{ good.id }}" target="_blank">{{ good.title }}</a>
+                            {{ good.count }} * {{ good.price }} = <b>${{ good.sum }}</b>
+                        </li>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <script src="/js/admin.js"></script>
+{% endblock %}
