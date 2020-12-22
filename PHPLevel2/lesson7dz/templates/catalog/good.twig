@@ -6,5 +6,17 @@
     <br><br>
     Цена: ${{ good.price }}<br>
     <br>
+    <div>
+        {% for img in good.images %}
+            <a href="{{ img }}" target="_blank">
+                <img src="{{ img }}" style="max-width: 200px;">
+            </a>
+
+        {% endfor %}
+    </div>
+    <fieldset>
+        <legend>Информация</legend>
+        {{ good.info }}
+    </fieldset>
     <a href="?addGood={{ good.id }}">добавить в корзину</a>
 {% endblock %}

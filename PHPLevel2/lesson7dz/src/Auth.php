@@ -6,6 +6,11 @@ use MyApp\Models\Users;
 
 class Auth
 {
+    protected static function getUsersModel(): Users
+    {
+        return new Users();
+    }
+
     public static function getBasket()
     {
         self::initBasket();
@@ -18,6 +23,9 @@ class Auth
         self::initBasket();
 
         $_SESSION['basket']['count']++;
+        if (!isset($_SESSION['basket']['goods'][$id])) {
+            $_SESSION['basket']['goods'][$id] = 0;
+        }
         $_SESSION['basket']['goods'][$id]++;
     }
 
@@ -43,9 +51,9 @@ class Auth
 
     public static function login($login)
     {
-        $user = Users::get($login);
+        $user = static::getUsersModel()::get($login);
         $_SESSION['user'] = $user;
-        $_SESSION['user']['roles'] = Users::getRoles($user['id']);
+        $_SESSION['user']['roles'] = static::getUsersModel()::getRoles($user['id']);
     }
 
     public static function hasRole(int $role): bool

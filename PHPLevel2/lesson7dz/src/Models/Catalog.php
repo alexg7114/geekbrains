@@ -2,8 +2,12 @@
 
 namespace MyApp\Models;
 
+use MyApp\GoodsImages;
+
 class Catalog extends BaseModel
 {
+    use GoodsImages;
+
     public const TABLE_CATEGORIES = 'categories';
     public const TABLE_GOODS = 'goods';
 
@@ -21,15 +25,28 @@ class Catalog extends BaseModel
 
     public static function getGoodsByCategory($id)
     {
-        return self::db()
+        $goods =  self::db()
             ->getLink()
             ->query('SELECT * FROM ' . self::TABLE_GOODS . ' WHERE category_id=' . (int)$id)
             ->fetchAll(\PDO::FETCH_ASSOC);
+        foreach ($goods as $k => $good) {
+            $images = self::getPublicImages($good['id']);
+            $img = $images ? array_shift($images) : null;
+            $goods[$k]['image'] = $img;
+        }
+
+        return $goods;
     }
 
     public static function getGoodById($id)
     {
-        return self::db()->getById(self::TABLE_GOODS, $id);
+        if (null === $good = self::db()->getById(self::TABLE_GOODS, $id)) {
+            return null;
+        }
+
+        $good['images'] = self::getPublicImages($id);
+
+        return $good;
     }
 
     public static function getCategoryById($id)

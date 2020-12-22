@@ -7,6 +7,10 @@ return [
         'pwd' => '1531',
     ],
     'templates' => __DIR__ . '/../templates',
+    'goodsImages' => [
+        'dir' => __DIR__ . '/../public/img/goods',
+        'public' => '/img/goods',
+    ],
     'routing' => [
         'login' => 'users/login',
         'logout' => 'users/logout',
