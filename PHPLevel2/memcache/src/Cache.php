@@ -14,7 +14,7 @@ class Cache implements CacheInterface
         $this->memcache->connect('localhost', 11211);
     }
 
-    public function check()
+    public function version()
     {
         return $this->memcache->getVersion();
     }
@@ -26,7 +26,7 @@ class Cache implements CacheInterface
 
     public function set($key, $value, $ttl = null)
     {
-        return $this->memcache->set($key, $value);
+        $this->memcache->set($key, $value);
     }
 
     public function delete($key)
@@ -45,11 +45,14 @@ class Cache implements CacheInterface
     }
 
     public function getMultiple($keys, $default = null)
-    {}
+    {
+    }
 
     public function setMultiple($values, $ttl = null)
-    {}
+    {
+    }
 
     public function deleteMultiple($keys)
-    {}
+    {
+    }
 }

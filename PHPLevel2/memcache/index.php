@@ -4,12 +4,10 @@ require 'vendor/autoload.php';
 
 $cache = new \App\Cache();
 
-echo $cache->check(), PHP_EOL;
-
 $data = new stdClass();
 $data->foo = 'bar';
 $data->baz = 'xyz';
 
-//$cache->set('data_key', $data);
+//$cache->set('mykey3', $data);
 
-var_dump($cache->get('data_key'));
+print_r($cache->get('mykey3'));
