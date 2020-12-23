@@ -4,7 +4,7 @@ namespace MyApp;
 
 trait GoodsImages
 {
-    public static function getImgList($id)
+    public static function getFilesList($id): array
     {
         $dir = App::instance()->getConfig()['goodsImages']['dir'] . '/' . $id;
         if (!file_exists($dir)) {
@@ -12,22 +12,19 @@ trait GoodsImages
         }
 
         $files = scandir($dir);
-        array_shift($files);
-        array_shift($files);
-
-        return $files;
+        return array_slice($files, 2);
     }
 
-    public static function getPublicImages($id)
+    public static function getImagesUrls($id)
     {
-        $files = self::getImgList($id);
-        $publicPath = App::instance()->getConfig()['goodsImages']['public'] . '/' . $id;
+        $files = self::getFilesList($id);
+        $url = App::instance()->getConfig()['goodsImages']['url'];
 
-        $public = [];
+        $urls = [];
         foreach ($files as $file) {
-            $public[] = $publicPath . '/' . $file;
+            $urls[] = $url . '/' . $id . '/' . $file;
         }
 
-        return $public;
+        return $urls;
     }
 }

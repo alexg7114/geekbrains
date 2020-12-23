@@ -6,7 +6,7 @@ use MyApp\Models\Users;
 
 class Auth
 {
-    protected static function getUsersModel(): Users
+    public static function getUsersModel()
     {
         return new Users();
     }

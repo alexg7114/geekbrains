@@ -5,7 +5,9 @@
     <a href="/catalog">Каталог</a> / {{ category.title }}
     {% for item in goods %}
         <li><a href="/catalog/{{ category.id }}/{{ item.id }}">
-                {% if item.image %}<img style="max-width: 50px" src="{{ item.image }}">{% endif %}
+                {% if item.image %}
+                    <img style="max-width: 70px;" src="{{ item.image }}">
+                {% endif %}
                 {{ item.title }}
             </a></li>
     {% endfor %}

@@ -25,14 +25,14 @@ class Catalog extends BaseModel
 
     public static function getGoodsByCategory($id)
     {
-        $goods =  self::db()
+        $goods = self::db()
             ->getLink()
             ->query('SELECT * FROM ' . self::TABLE_GOODS . ' WHERE category_id=' . (int)$id)
             ->fetchAll(\PDO::FETCH_ASSOC);
+
         foreach ($goods as $k => $good) {
-            $images = self::getPublicImages($good['id']);
-            $img = $images ? array_shift($images) : null;
-            $goods[$k]['image'] = $img;
+            $images = self::getImagesUrls($good['id']);
+            $goods[$k]['image'] = array_shift($images);
         }
 
         return $goods;
@@ -40,11 +40,12 @@ class Catalog extends BaseModel
 
     public static function getGoodById($id)
     {
-        if (null === $good = self::db()->getById(self::TABLE_GOODS, $id)) {
+        $good = self::db()->getById(self::TABLE_GOODS, $id);
+        if (!$good) {
             return null;
         }
 
-        $good['images'] = self::getPublicImages($id);
+        $good['images'] = self::getImagesUrls($good['id']);
 
         return $good;
     }

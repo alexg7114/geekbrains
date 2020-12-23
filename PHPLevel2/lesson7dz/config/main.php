@@ -9,7 +9,7 @@ return [
     'templates' => __DIR__ . '/../templates',
     'goodsImages' => [
         'dir' => __DIR__ . '/../public/img/goods',
-        'public' => '/img/goods',
+        'url' => '/img/goods',
     ],
     'routing' => [
         'login' => 'users/login',
