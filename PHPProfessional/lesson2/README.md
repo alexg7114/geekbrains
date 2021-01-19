@@ -1,8 +1,8 @@
 1. Пример оформления кода по PSR-1 - psr1.php
 
    https://www.php-fig.org/psr/psr-1/
-   https://svyatoslav.biz/misc/psr_translation/#_PSR-1
    
+   https://svyatoslav.biz/misc/psr_translation/#_PSR-1
 2. Присвоение простых типов, объектов, сериализация, клонирование - index.php
 3. Контроль типов - hinting.php
 4. Пространства имен - namespaces
