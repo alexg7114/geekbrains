@@ -1,0 +1,26 @@
+{% extends 'layout.twig' %}
+
+{% block title %}Basket{% endblock %}
+
+{% block content %}
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Count</th>
+            <th>Sum</th>
+        </tr>
+        {% for good in goods %}
+            <tr>
+                <td>{{ good.title }}</td>
+                <td>{{ good.price }}</td>
+                <td>{{ good.count }}</td>
+                <td>{{ good.sum }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <b>Sum: {{ sum }}</b>
+
+    <br/><br/>
+    <a href="/order"><button>order</button></a>
+{% endblock %}
